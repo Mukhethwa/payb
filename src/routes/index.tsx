@@ -65,8 +65,8 @@ function Logo({ size = "md" }: { size?: "md" | "sm" }) {
     <img
       src={logoImage}
       alt="PayB4 - AI Payments"
-      width={1197}
-      height={314}
+      width={1408}
+      height={768}
       className={`w-auto ${size === "md" ? "h-10 sm:h-11" : "h-9"}`}
     />
   );
@@ -416,7 +416,9 @@ function Footer() {
     <footer className="border-t border-border bg-card px-5 py-12 sm:px-8 lg:px-12">
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          <Logo size="sm" />
+          <Link to="/" aria-label="PayB4 home">
+            <Logo size="sm" />
+          </Link>
 
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} PayB4. Autonomous WhatsApp orders, quotes & payments for South
