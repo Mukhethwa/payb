@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 
 import heroImage from "../assets/hero-payb4.jpg";
-import logoAsset from "../assets/payb4-logo.png.asset.json";
+import logoImage from "../assets/payb4-logo.png";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
@@ -63,7 +63,7 @@ function LandingPage() {
 function Logo({ size = "md" }: { size?: "md" | "sm" }) {
   return (
     <img
-      src={logoAsset.url}
+      src={logoImage}
       alt="PayB4 - AI Payments"
       width={1197}
       height={314}
