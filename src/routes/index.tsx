@@ -239,6 +239,7 @@ function Ticker() {
     "PayFast payment links",
     "No app download",
     "Quotes in seconds",
+    "Hours saved on manual quotes",
     "Payments verified instantly",
   ];
 
@@ -265,7 +266,7 @@ function ReceiptSection() {
     {
       n: "02",
       title: "Agent writes the quote",
-      body: "PayB4 pulls out products, quantities and delivery, prices the job and adds 15% SA VAT. You approve the quote before it goes out — nothing is sent without the business owner's sign-off.",
+      body: "PayB4 pulls out products, quantities and delivery, prices the job and adds 15% SA VAT. You approve the quote before it goes out. Nothing is sent without the business owner's sign-off.",
     },
     {
       n: "03",
@@ -285,8 +286,8 @@ function ReceiptSection() {
               <span className="text-flare">on the ledger.</span>
             </h2>
             <p className="mt-6 max-w-sm text-base font-medium leading-7">
-              No forms. No PDF attachments. No Sunday-night follow-up calls. One conversation that ends
-              with cleared funds.
+              No forms. No PDF attachments. No Sunday-night follow-up calls. No time wasted on chats that
+              never convert. One conversation that ends with cleared funds.
             </p>
           </div>
 
