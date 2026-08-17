@@ -1,14 +1,16 @@
-## PayB4
 
+
+## Dev
+[install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
 ```sh
-git clone 
-cd 
+git clone <this-repository-url>
+cd <repository-name>
 npm i
 npm run dev
 ```
 
-## Tech stack
+## Tech Stack
 
 - TanStack Start
 - TypeScript

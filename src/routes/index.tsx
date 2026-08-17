@@ -6,32 +6,30 @@ import {
   FileText,
   ShieldCheck,
   Smartphone,
-  CheckCircle,
-  ArrowRight,
+  ArrowUpRight,
   Store,
   Truck,
   ChefHat,
   HardHat,
 } from "lucide-react";
 
-import heroImage from "../assets/hero-payb4.jpg";
-import logoImage from "../assets/payb4-logo.png";
+import logoUrl from "../assets/payb4-logo.png";
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
   head: () => ({
     meta: [
-      { title: "PayB4 | WhatsApp Orders, Quotes & Payments for SA Businesses" },
+      { title: "PayB4 | WhatsApp Quotes & Instant Payment Links, South Africa" },
       {
         name: "description",
         content:
-          "PayB4 turns WhatsApp messages into instant quotes and paid invoices for South African SMEs. AI-powered, 15% VAT ready, with Stitch and PayFast payment links.",
+          "PayB4 is an AI agent inside WhatsApp that turns customer messages and voice notes into VAT-ready quotes and instant Stitch or PayFast payment links for South African businesses.",
       },
-      { property: "og:title", content: "PayB4 | WhatsApp Orders, Quotes & Payments for SA Businesses" },
+      { property: "og:title", content: "PayB4 | WhatsApp Quotes & Instant Payment Links" },
       {
         property: "og:description",
         content:
-          "Turn WhatsApp messages into instant quotes and paid invoices. Built for South African SMEs, tradespeople and wholesale suppliers.",
+          "Messages in. Quotes out. Money in the bank. Built for South African SMEs, tradespeople and wholesale suppliers.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
@@ -40,8 +38,8 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const WHATSAPP_DEMO_LINK = "https://wa.me/27123456789?text=Hi%20PayB4%2C%20I%27d%20like%20to%20try%20the%20demo";
-const GET_STARTED_LINK = "https://wa.me/27123456789?text=Hi%20PayB4%2C%20I%27d%20like%20to%20get%20started%20for%20my%20business";
+const WHATSAPP_DEMO_LINK = "https://wa.me/27788648190?text=Hi%20PayB4%2C%20I%27d%20like%20to%20try%20the%20demo";
+const GET_STARTED_LINK = "https://wa.me/27788648190?text=Hi%20PayB4%2C%20I%27d%20like%20to%20get%20started%20for%20my%20business";
 
 function LandingPage() {
   return (
@@ -49,9 +47,9 @@ function LandingPage() {
       <Navbar />
       <main>
         <HeroSection />
-        <TrustStrip />
+        <Ticker />
+        <ReceiptSection />
         <FeaturesSection />
-        <HowItWorksSection />
         <AudienceSection />
         <CTASection />
       </main>
@@ -62,44 +60,49 @@ function LandingPage() {
 
 function Logo({ size = "md" }: { size?: "md" | "sm" }) {
   return (
-    <img
-      src={logoImage}
-      alt="PayB4 - AI Payments"
-      width={1408}
-      height={768}
-      className={`w-auto ${size === "md" ? "h-10 sm:h-11" : "h-9"}`}
-    />
+    <span className="inline-flex items-center bg-background px-2 py-1 ink-frame">
+      <img
+        src={logoUrl}
+        alt="PayB4 - AI Payments"
+        width={1190}
+        height={312}
+        className={`w-auto ${size === "md" ? "h-7 sm:h-8" : "h-7"}`}
+      />
+    </span>
   );
 }
 
 function Navbar() {
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/90 backdrop-blur-md">
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-12">
+    <header className="sticky top-0 z-50 w-full border-b-[3px] border-ink bg-background">
+      <div className="mx-auto flex h-20 max-w-[1400px] items-center justify-between px-5 sm:px-8">
         <Link to="/" aria-label="PayB4 home">
           <Logo />
         </Link>
 
-
-        <nav className="hidden items-center gap-8 text-[15px] font-medium text-muted-foreground md:flex">
-          <a href="#features" className="transition-colors hover:text-foreground">
-            Features
-          </a>
-          <a href="#how-it-works" className="transition-colors hover:text-foreground">
-            How it works
-          </a>
-          <a href="#audience" className="transition-colors hover:text-foreground">
-            For your business
-          </a>
+        <nav className="hidden items-center gap-1 text-xs font-bold uppercase tracking-[0.14em] md:flex">
+          {[
+            { href: "#ledger", label: "How it works" },
+            { href: "#features", label: "Features" },
+            { href: "#audience", label: "Who it's for" },
+          ].map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="border-[3px] border-transparent px-3 py-2 transition-colors hover:border-ink hover:bg-acid hover:text-acid-foreground"
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
 
         <a
           href={WHATSAPP_DEMO_LINK}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald px-5 py-2.5 text-sm font-semibold text-emerald-foreground shadow-glow transition-all hover:bg-emerald/90 hover:shadow-none"
+          className="ink-frame hard-shadow-sm press inline-flex items-center gap-2 bg-flare px-4 py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-flare-foreground"
         >
-          Try Demo
+          Try the demo
         </a>
       </div>
     </header>
@@ -108,19 +111,27 @@ function Navbar() {
 
 function HeroSection() {
   return (
-    <section className="relative overflow-hidden px-5 pt-20 pb-24 sm:px-8 lg:px-12 lg:pt-28 lg:pb-32">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
-          <div className="max-w-2xl">
-            <h1 className="text-[2.75rem] font-bold leading-[1.1] tracking-tight text-foreground sm:text-5xl lg:text-[3.5rem] text-balance">
-              Turn WhatsApp chats into{" "}
-              <span className="text-emerald">paid invoices</span>.
+    <section className="grid-paper relative overflow-hidden border-b-[3px] border-ink px-5 py-16 sm:px-8 lg:py-24">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-6">
+          {/* Left: type stack */}
+          <div className="lg:col-span-7">
+            <p className="inline-block ink-frame bg-acid px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-acid-foreground">
+              WhatsApp agent / South Africa
+            </p>
+
+            <h1 className="mt-8 text-[3.25rem] leading-[0.88] tracking-tight sm:text-[4.5rem] lg:text-[5.75rem]">
+              <span className="block">Messages in.</span>
+              <span className="relative -ml-1 block text-flare">Quotes out.</span>
+              <span className="mt-2 inline-block bg-ink px-3 py-1 text-ink-foreground">
+                Money in.
+              </span>
             </h1>
 
-            <p className="mt-7 text-lg leading-8 text-muted-foreground text-balance">
-              PayB4 is an autonomous AI agent that runs inside WhatsApp. It parses customer orders and
-              voice notes, builds accurate quotes with 15% SA VAT, and sends instant payment links via
-              Stitch and PayFast, so you get paid faster with zero manual admin.
+            <p className="mt-8 max-w-xl border-l-[6px] border-flare pl-5 text-lg font-medium leading-7 text-foreground">
+              PayB4 is an autonomous AI agent living in your WhatsApp. It reads texts and voice notes,
+              builds a line-item quote with 15% SA VAT, and fires back a Stitch or PayFast payment link
+              before your customer changes their mind.
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -128,48 +139,90 @@ function HeroSection() {
                 href={WHATSAPP_DEMO_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald px-8 py-4 text-base font-semibold text-emerald-foreground shadow-glow transition-all hover:bg-emerald/90 hover:shadow-none"
+                className="ink-frame hard-shadow press inline-flex items-center justify-center gap-2 bg-flare px-7 py-4 text-sm font-bold uppercase tracking-[0.14em] text-flare-foreground"
               >
-                <MessageCircle className="h-5 w-5" />
-                Try Demo on WhatsApp
+                <MessageCircle className="h-4 w-4" />
+                Try demo on WhatsApp
               </a>
               <a
                 href={GET_STARTED_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-8 py-4 text-base font-semibold text-foreground transition-colors hover:bg-secondary"
+                className="ink-frame hard-shadow press inline-flex items-center justify-center gap-2 bg-background px-7 py-4 text-sm font-bold uppercase tracking-[0.14em] text-foreground"
               >
-                Get Started for Your Business
-                <ArrowRight className="h-4 w-4" />
+                Get started
+                <ArrowUpRight className="h-4 w-4" />
               </a>
             </div>
 
-            <ul className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted-foreground">
-              <li className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-emerald" />
-                No app download
-              </li>
-              <li className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-emerald" />
-                15% VAT included
-              </li>
-              <li className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-emerald" />
-                Instant payment links
-              </li>
-            </ul>
+            <dl className="mt-12 grid max-w-xl grid-cols-3 border-[3px] border-ink divide-x-[3px] divide-ink">
+              {[
+                { k: "No app", v: "Zero downloads" },
+                { k: "15%", v: "SA VAT built in" },
+                { k: "2 rails", v: "Stitch + PayFast" },
+              ].map((s) => (
+                <div key={s.k} className="p-4">
+                  <dt className="font-display text-xl uppercase leading-none">{s.k}</dt>
+                  <dd className="mt-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    {s.v}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
 
-          <div className="relative">
-            <div className="absolute -inset-6 rounded-[2.5rem] bg-gradient-to-tr from-emerald/10 via-transparent to-ocean/10 blur-3xl"></div>
-            <div className="relative overflow-hidden rounded-[2rem] border border-border bg-card shadow-card">
-              <img
-                src={heroImage}
-                alt="PayB4 WhatsApp order to invoice flow showing an AI agent parsing a WhatsApp order and generating a South African Rand invoice with VAT and a Pay Now button"
-                width={1280}
-                height={720}
-                className="w-full"
-              />
+          {/* Right: broken-grid chat + quote slip */}
+          <div className="relative lg:col-span-5">
+            <div className="relative mx-auto max-w-md lg:mt-6">
+              <div className="ink-frame hard-shadow-flare relative z-10 rotate-[-1.5deg] bg-background">
+                <div className="flex items-center justify-between border-b-[3px] border-ink bg-ink px-4 py-2.5 text-ink-foreground">
+                  <span className="text-[11px] font-bold uppercase tracking-[0.18em]">
+                    WhatsApp / +27
+                  </span>
+                  <span className="text-[11px] font-bold uppercase tracking-[0.18em]">Live</span>
+                </div>
+                <div className="space-y-3 p-4">
+                  <div className="ink-frame max-w-[85%] bg-secondary px-3 py-2 text-sm font-medium">
+                    <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                      <Mic className="h-3.5 w-3.5" /> Voice note 0:14
+                    </span>
+                    <p className="mt-1">
+                      "Howzit, need 40 bags cement and 12 sheets IBR delivered Benoni Thursday."
+                    </p>
+                  </div>
+                  <div className="ml-auto ink-frame max-w-[85%] bg-acid px-3 py-2 text-sm font-semibold text-acid-foreground">
+                    Quote QT-1042 ready. R 18 630,00 incl. VAT. Tap to pay.
+                  </div>
+                  <div className="ml-auto ink-frame max-w-[65%] bg-flare px-3 py-2 text-sm font-bold uppercase tracking-wider text-flare-foreground">
+                    Pay now link
+                  </div>
+                </div>
+              </div>
+
+              <div className="ink-frame hard-shadow relative z-20 mt-6 ml-auto w-[82%] rotate-[2deg] bg-background">
+                <div className="border-b-[3px] border-ink px-4 py-2">
+                  <p className="font-display text-sm uppercase">Quote QT-1042</p>
+                </div>
+                <table className="w-full text-[13px] font-medium">
+                  <tbody>
+                    {[
+                      ["Cement 32,5N x40", "R 6 200,00"],
+                      ["IBR sheeting x12", "R 8 940,00"],
+                      ["Delivery Benoni", "R 1 060,00"],
+                      ["VAT 15%", "R 2 430,00"],
+                    ].map(([label, amount]) => (
+                      <tr key={label} className="border-b border-ink/20">
+                        <td className="px-4 py-1.5">{label}</td>
+                        <td className="px-4 py-1.5 text-right tabular-nums">{amount}</td>
+                      </tr>
+                    ))}
+                    <tr className="bg-ink text-ink-foreground">
+                      <td className="px-4 py-2 font-display text-xs uppercase">Total</td>
+                      <td className="px-4 py-2 text-right font-display tabular-nums">R 18 630,00</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -178,23 +231,84 @@ function HeroSection() {
   );
 }
 
-function TrustStrip() {
-  const stats = [
-    { label: "Payment gateways", value: "Stitch + PayFast" },
-    { label: "VAT compliance", value: "15% SA VAT" },
-    { label: "Customer touchpoint", value: "WhatsApp Native" },
+function Ticker() {
+  const items = [
+    "Voice notes parsed",
+    "15% VAT calculated",
+    "Stitch payment links",
+    "PayFast payment links",
+    "No app download",
+    "Quotes in seconds",
+    "Hours saved on manual quotes",
+    "Payments verified instantly",
   ];
 
   return (
-    <section className="border-y border-border bg-card px-5 py-12 sm:px-8 lg:px-12">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-8 sm:grid-cols-3">
-          {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="text-lg font-semibold text-foreground">{stat.value}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
-            </div>
-          ))}
+    <div className="overflow-hidden border-b-[3px] border-ink bg-flare py-3 text-flare-foreground">
+      <div className="marquee-track flex w-max items-center gap-8 whitespace-nowrap">
+        {[...items, ...items].map((item, i) => (
+          <span key={i} className="text-xs font-bold uppercase tracking-[0.2em]">
+            {item} <span className="ml-8">/</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ReceiptSection() {
+  const steps = [
+    {
+      n: "01",
+      title: "Customer messages",
+      body: "A text or a rambling voice note lands on your WhatsApp Business number, exactly like it does today.",
+    },
+    {
+      n: "02",
+      title: "Agent writes the quote",
+      body: "PayB4 pulls out products, quantities and delivery, prices the job and adds 15% SA VAT. You approve the quote before it goes out. Nothing is sent without the business owner's sign-off.",
+    },
+    {
+      n: "03",
+      title: "Link gets paid",
+      body: "A Stitch or PayFast link goes back in the thread. Payment verified, you get pinged, job confirmed.",
+    },
+  ];
+
+  return (
+    <section id="ledger" className="border-b-[3px] border-ink bg-paper px-5 py-20 sm:px-8 lg:py-28">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <h2 className="text-4xl leading-[0.95] sm:text-5xl">
+              Three lines
+              <br />
+              <span className="text-flare">on the ledger.</span>
+            </h2>
+            <p className="mt-6 max-w-sm text-base font-medium leading-7">
+              No forms. No PDF attachments. No Sunday-night follow-up calls. No time wasted on chats that
+              never convert. One conversation that ends with cleared funds.
+            </p>
+          </div>
+
+          <ol className="lg:col-span-8 lg:pt-4">
+            {steps.map((s, i) => (
+              <li
+                key={s.n}
+                className={`ink-frame bg-background p-6 sm:p-8 ${i > 0 ? "-mt-[3px]" : ""} ${
+                  i === 1 ? "lg:ml-10" : i === 2 ? "lg:ml-20" : ""
+                }`}
+              >
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-8">
+                  <span className="font-display text-4xl leading-none text-flare sm:text-5xl">{s.n}</span>
+                  <div>
+                    <h3 className="text-xl sm:text-2xl">{s.title}</h3>
+                    <p className="mt-2 max-w-xl text-base font-medium leading-7">{s.body}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>
@@ -205,106 +319,57 @@ function FeaturesSection() {
   const features = [
     {
       icon: Smartphone,
-      title: "Zero App Download",
-      description:
-        "PayB4 works natively inside WhatsApp for both you and your customers. No new apps, no onboarding friction, no forgotten passwords.",
+      title: "Zero app download",
+      body: "Runs natively inside WhatsApp for you and your customers. No onboarding, no forgotten passwords.",
+      tone: "bg-background",
     },
     {
       icon: Mic,
-      title: "Voice Note & Text Support",
-      description:
-        "Customers can send messy voice notes or quick texts. PayB4 extracts products, quantities, delivery details, and prices automatically.",
+      title: "Voice note fluent",
+      body: "Messy voice notes and shorthand texts become structured line items, quantities and delivery notes.",
+      tone: "bg-acid",
     },
     {
       icon: FileText,
-      title: "Automated Instant Invoicing",
-      description:
-        "Dynamic quotes with line items, quantities, unit prices, subtotals, and 15% South African VAT, generated and sent in seconds.",
+      title: "Instant VAT invoicing",
+      body: "Quotes with unit prices, subtotals and 15% South African VAT generated and sent in seconds.",
+      tone: "bg-background",
     },
     {
       icon: ShieldCheck,
-      title: "Built for SA Business",
-      description:
-        "Tailored for local trade suppliers, caterers, contractors, and boutique distributors. Local payment methods your customers already trust.",
+      title: "Local payment rails",
+      body: "Stitch and PayFast links your customers already trust, with payment verification straight to you.",
+      tone: "bg-flare text-flare-foreground",
     },
   ];
 
   return (
-    <section id="features" className="px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
-      <div className="mx-auto max-w-7xl">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-[2.5rem]">
-            Everything you need to quote and collect payment in one chat.
+    <section id="features" className="border-b-[3px] border-ink px-5 py-20 sm:px-8 lg:py-28">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="flex flex-col gap-6 border-b-[3px] border-ink pb-8 lg:flex-row lg:items-end lg:justify-between">
+          <h2 className="max-w-2xl text-4xl leading-[0.95] sm:text-5xl">
+            Quote, invoice and collect from one chat thread.
           </h2>
-          <p className="mt-5 text-lg text-muted-foreground">
-            Replace spreadsheets, manual quotes, and follow-up calls with a single WhatsApp number that
-            sells, invoices, and gets you paid.
+          <p className="max-w-sm text-base font-medium leading-7">
+            Spreadsheets, manual quotes and follow-ups replaced by a single WhatsApp number that sells and
+            settles.
           </p>
         </div>
 
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map((feature) => (
-            <div
-              key={feature.title}
-              className="group flex flex-col items-center rounded-3xl border border-border bg-card p-7 text-center shadow-sm transition-all hover:-translate-y-1 hover:shadow-card"
+        <div className="grid gap-0 sm:grid-cols-2 lg:grid-cols-4">
+          {features.map((f, i) => (
+            <article
+              key={f.title}
+              className={`ink-frame -mt-[3px] p-7 sm:-ml-[3px] ${f.tone} ${
+                i % 2 === 1 ? "lg:mt-6" : ""
+              }`}
             >
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary text-foreground">
-                <feature.icon className="h-6 w-6" />
+              <div className="ink-frame inline-flex h-12 w-12 items-center justify-center bg-background text-foreground">
+                <f.icon className="h-5 w-5" />
               </div>
-              <h3 className="mt-6 text-lg font-semibold text-foreground">{feature.title}</h3>
-              <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
-                {feature.description}
-              </p>
-            </div>
-          ))}
-        </div>
-
-      </div>
-    </section>
-  );
-}
-
-function HowItWorksSection() {
-  const steps = [
-    {
-      step: "01",
-      title: "Customer messages you on WhatsApp",
-      description:
-        "They send a voice note or text asking for products or services, just like they already do.",
-    },
-    {
-      step: "02",
-      title: "PayB4 builds the quote instantly",
-      description:
-        "The AI agent parses the request, adds line items, calculates 15% SA VAT, and replies with a clean, professional quote.",
-    },
-    {
-      step: "03",
-      title: "Customer pays through a secure link",
-      description:
-        "A direct Stitch or PayFast payment link is sent inside the chat. You get notified the moment payment is verified.",
-    },
-  ];
-
-  return (
-    <section id="how-it-works" className="gradient-hero px-5 py-24 text-ocean-foreground sm:px-8 lg:px-12 lg:py-32">
-      <div className="mx-auto max-w-7xl">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-[2.5rem]">
-            From WhatsApp message to paid invoice in three steps.
-          </h2>
-          <p className="mt-5 text-lg text-ocean-foreground/80">
-            No forms, no PDFs, no chasing. Just a conversation that ends with money in your account.
-          </p>
-        </div>
-
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
-          {steps.map((item) => (
-            <div key={item.step} className="rounded-3xl bg-white/8 p-8 backdrop-blur-sm">
-              <span className="text-5xl font-extrabold text-emerald/90">{item.step}</span>
-              <h3 className="mt-6 text-xl font-semibold">{item.title}</h3>
-              <p className="mt-3 leading-relaxed text-ocean-foreground/80">{item.description}</p>
-            </div>
+              <h3 className="mt-6 text-lg leading-tight">{f.title}</h3>
+              <p className="mt-3 text-[15px] font-medium leading-6">{f.body}</p>
+            </article>
           ))}
         </div>
       </div>
@@ -316,54 +381,75 @@ function AudienceSection() {
   const audiences = [
     {
       icon: Store,
-      title: "Trade Suppliers",
-      description: "Send quotes for bulk materials, fittings, and stock orders straight from WhatsApp enquiries.",
+      title: "Trade suppliers",
+      body: "Bulk materials, fittings and stock orders quoted straight off a WhatsApp enquiry.",
     },
     {
       icon: ChefHat,
-      title: "Caterers & Food Businesses",
-      description: "Turn event enquiries and menu requests into confirmed, paid bookings with instant payment links.",
+      title: "Caterers",
+      body: "Event enquiries and menu requests turned into confirmed, paid bookings.",
     },
     {
       icon: HardHat,
       title: "Contractors",
-      description: "Quote labour and materials on-site, collect deposits, and keep every job organised in one thread.",
+      body: "Price labour and materials on site, take the deposit before you leave.",
     },
     {
       icon: Truck,
-      title: "Boutique Distributors",
-      description: "Handle repeat orders, delivery notes, and invoice confirmations without leaving WhatsApp.",
+      title: "Distributors",
+      body: "Repeat orders, delivery notes and invoice confirmations without leaving the chat.",
     },
   ];
 
   return (
-    <section id="audience" className="px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
-      <div className="mx-auto max-w-7xl">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-[2.5rem]">
-            Built for the way South African businesses actually sell.
-          </h2>
-          <p className="mt-5 text-lg text-muted-foreground">
-            If your customers already order by WhatsApp, PayB4 is the fastest way to turn those chats into
-            revenue.
-          </p>
+    <section id="audience" className="border-b-[3px] border-ink bg-ink px-5 py-20 text-ink-foreground sm:px-8 lg:py-28">
+      <div className="mx-auto max-w-[1400px]">
+        <h2 className="max-w-3xl text-4xl leading-[0.95] sm:text-5xl">
+          Built for the way South Africa
+          <span className="text-acid"> actually sells.</span>
+        </h2>
+        <p className="mt-6 max-w-xl text-base font-medium leading-7 text-ink-foreground/80">
+          If your customers already order by WhatsApp, PayB4 is the shortest route from chat to cleared
+          payment.
+        </p>
+
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {audiences.map((a, i) => (
+            <article
+              key={a.title}
+              className={`border-[3px] border-ink-foreground bg-ink p-6 ${
+                i % 2 === 1 ? "lg:translate-y-6" : ""
+              }`}
+            >
+              <a.icon className="h-6 w-6 text-acid" />
+              <h3 className="mt-5 text-lg leading-tight">{a.title}</h3>
+              <p className="mt-2 text-[15px] font-medium leading-6 text-ink-foreground/80">{a.body}</p>
+            </article>
+          ))}
         </div>
 
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {audiences.map((audience) => (
-            <div
-              key={audience.title}
-              className="rounded-3xl border border-border bg-card p-7 transition-colors hover:border-emerald/30"
-            >
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary text-foreground">
-                <audience.icon className="h-5 w-5" />
-              </div>
-              <h3 className="mt-5 font-semibold text-foreground">{audience.title}</h3>
-              <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
-                {audience.description}
+        <div className="mt-6 border-[3px] border-ink-foreground bg-acid p-6 text-acid-foreground sm:p-8 lg:mt-12">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="font-display text-4xl leading-none sm:text-5xl">+ Many more</p>
+              <p className="mt-3 max-w-xl text-[15px] font-semibold leading-6">
+                Salons, car washes, mobile mechanics, tutors, nurseries, event hire, plumbers, printers,
+                spaza wholesalers. If you quote it on WhatsApp, PayB4 can sell it and collect for it.
               </p>
             </div>
-          ))}
+            <div className="flex flex-wrap gap-2">
+              {["Salons", "Car washes", "Barbers", "Tutors", "Event hire", "Mechanics", "Nurseries"].map(
+                (t) => (
+                  <span
+                    key={t}
+                    className="border-[3px] border-ink bg-background px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-foreground"
+                  >
+                    {t}
+                  </span>
+                ),
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -372,38 +458,36 @@ function AudienceSection() {
 
 function CTASection() {
   return (
-    <section className="px-5 py-24 sm:px-8 lg:px-12">
-      <div className="mx-auto max-w-5xl overflow-hidden rounded-[2.5rem] bg-foreground text-background">
-        <div className="grid items-center gap-10 px-8 py-16 md:grid-cols-2 md:px-16 lg:py-20">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-[2.5rem] text-balance">
-              Ready to stop chasing invoices?
+    <section className="grid-paper border-b-[3px] border-ink px-5 py-20 sm:px-8 lg:py-28">
+      <div className="mx-auto max-w-[1200px]">
+        <div className="ink-frame hard-shadow bg-acid px-7 py-14 text-acid-foreground sm:px-14">
+          <div className="grid gap-10 md:grid-cols-2 md:items-center">
+            <h2 className="text-4xl leading-[0.92] sm:text-5xl">
+              Stop chasing.
+              <br />
+              Start banking.
             </h2>
-            <p className="mt-5 text-lg text-background/80">
-              Join South African SMEs using PayB4 to quote faster, get paid sooner, and run their business
-              entirely from WhatsApp.
-            </p>
-          </div>
 
-          <div className="flex flex-col gap-4">
-            <a
-              href={WHATSAPP_DEMO_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald px-8 py-4 text-base font-semibold text-emerald-foreground shadow-glow transition-all hover:bg-emerald/90"
-            >
-              <MessageCircle className="h-5 w-5" />
-              Try Demo on WhatsApp
-            </a>
-            <a
-              href={GET_STARTED_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-background/20 bg-transparent px-8 py-4 text-base font-semibold text-background transition-colors hover:bg-background/10"
-            >
-              Get Started for Your Business
-              <ArrowRight className="h-4 w-4" />
-            </a>
+            <div className="flex flex-col gap-4">
+              <a
+                href={WHATSAPP_DEMO_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ink-frame hard-shadow-sm press inline-flex items-center justify-center gap-2 bg-flare px-7 py-4 text-sm font-bold uppercase tracking-[0.14em] text-flare-foreground"
+              >
+                <MessageCircle className="h-4 w-4" />
+                Try demo on WhatsApp
+              </a>
+              <a
+                href={GET_STARTED_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ink-frame hard-shadow-sm press inline-flex items-center justify-center gap-2 bg-background px-7 py-4 text-sm font-bold uppercase tracking-[0.14em] text-foreground"
+              >
+                Get started for your business
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -413,28 +497,21 @@ function CTASection() {
 
 function Footer() {
   return (
-    <footer className="border-t border-border bg-card px-5 py-12 sm:px-8 lg:px-12">
-      <div className="mx-auto max-w-7xl">
-        <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          <Link to="/" aria-label="PayB4 home">
-            <Logo size="sm" />
-          </Link>
+    <footer className="px-5 py-12 sm:px-8">
+      <div className="mx-auto max-w-[1400px]">
+        <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+          <Logo size="sm" />
 
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} PayB4. Autonomous WhatsApp orders, quotes & payments for South
-            African businesses.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm font-medium text-muted-foreground">
-            <a href="#features" className="transition-colors hover:text-emerald">
+          <div className="flex flex-wrap items-center gap-6 text-xs font-bold uppercase tracking-[0.14em]">
+            <a href="#features" className="hover:text-flare">
               Features
             </a>
-            <a href="#how-it-works" className="transition-colors hover:text-emerald">
+            <a href="#ledger" className="hover:text-flare">
               How it works
             </a>
             <a
               href="mailto:support@payb4.co.za"
-              className="inline-flex items-center gap-2 transition-colors hover:text-emerald"
+              className="inline-flex items-center gap-2 hover:text-flare"
             >
               <Mail className="h-4 w-4" />
               support@payb4.co.za
@@ -442,6 +519,10 @@ function Footer() {
           </div>
         </div>
 
+        <p className="mt-8 border-t-[3px] border-ink pt-6 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+          © {new Date().getFullYear()} PayB4. Autonomous WhatsApp orders, quotes and payments for South
+          African business.
+        </p>
       </div>
     </footer>
   );
